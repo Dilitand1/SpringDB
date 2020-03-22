@@ -54,8 +54,8 @@ public class Main2 {
         System.out.println(events);
     }
 
-    public int logEvent(int id, String event) {
-        return jdbcTemplate.update("INSERT INTO t_EVENT (id,msg) VALUES (?,?)",id,event);
+    public void logEvent(int id, String event) {
+        jdbcTemplate.update("INSERT INTO t_EVENT (id,msg) VALUES (?,?)",id,event);
     }
 
     public int deleteAll(){
