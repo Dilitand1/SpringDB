@@ -1,6 +1,7 @@
 package ru.litvinov;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
@@ -9,12 +10,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Aspect
-@Component
+//@Component
 public class LoggingAspect {
 
     Logger logger = Logger.getLogger("1");
 
-    @Pointcut("execution(* *.logEvent())")
+    @Pointcut("execution(* *.*soutEvent*())")
     private void allLogEventMethods(){
 
     }
@@ -24,11 +25,17 @@ public class LoggingAspect {
 
     }
 
-    @Before("allMainMethods()")
-    private void test(JoinPoint joinPoint){
+    @Around("allLogEventMethods()")
+    private void test(ProceedingJoinPoint joinPoint) throws Throwable {
+        /*
         logger.log(Level.INFO,joinPoint.getTarget().getClass().getSimpleName() + " "
                 + new Date().toString()
                 + " " + joinPoint.getSignature().getName());
+
+         */
+        joinPoint.proceed();
+        System.out.println("around");
+
     }
 
     @Before("allLogEventMethods()")
